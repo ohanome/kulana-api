@@ -6,33 +6,29 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\Process\Process;
 
-class Status {
+class Ping {
 
-    public static function getStatusFromRequest(Request $request) {
+    public static function getPingFromRequest(Request $request) {
         $messages = [];
-        if (!$request->has('url')) {
+        if (!$request->has('hostname')) {
             return new JsonResponse([
-                'message' => 'URL required.',
+                'message' => 'Hostname required.',
             ], 400);
         }
 
-        $url = $request->input('url');
-        if (!filter_var($url, FILTER_VALIDATE_URL)) {
-            return new JsonResponse([
-                'message' => 'Invalid URL.',
-            ], 400);
-        }
+        $hostname = $request->input('hostname');
 
         $command = new Command();
-        $command->setCommand('status')
-            ->setUrl($url)
+        $command->setCommand('ping')
+            ->setHostname($hostname)
             ->setFormat('json');
 
-        if ($request->has('checkCertificate')) {
-            if ($request->input('checkCertificate') == 1 || $request->input('checkCertificate') == 0) {
-                $command->setCheckCertificate((bool) (int) $request->input('checkCertificate'));
+        if ($request->has('port')) {
+            $port = $request->input('port');
+            if (is_numeric($port)) {
+                $command->setPort((int) $port);
             } else {
-                $messages[] = 'Invalid value for checkCertificate.';
+                $messages[] = 'Invalid value for port.';
             }
         }
 

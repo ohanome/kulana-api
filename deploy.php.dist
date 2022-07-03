@@ -1,0 +1,38 @@
+<?php
+namespace Deployer;
+
+require 'deployer-laravel.php';
+
+// Project name
+set('application', 'kulana-api');
+
+// Config
+
+set('repository', 'git@github.com:ohanome/kulana-api.git');
+
+// Hosts
+
+host('main')
+    ->hostname('ohano.me') #!
+    ->port(22) #!
+    ->stage('main')
+    ->set('deploy_path', '') #!
+    ->set('branch', 'main')
+    ->user('') #!
+    ->set('http_user', '') #!
+    //->set('bin/php', '/opt/plesk/php/8.1/bin/php')
+    ->identityFile('~/.ssh/id_rsa')
+    ->forwardAgent(true)
+    ->multiplexing(true)
+    ->addSshOption('UserKnownHostsFile', '/dev/null')
+    ->addSshOption('StrictHostKeyChecking', 'no')
+;
+
+// Tasks
+
+task('build', function () {
+    cd('{{release_path}}');
+    run('npm run build');
+});
+
+after('deploy:failed', 'deploy:unlock');

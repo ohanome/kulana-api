@@ -1,5 +1,6 @@
 <?php
 
+use App\Kulana\Ping;
 use App\Kulana\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,4 +33,12 @@ Route::post('/status', function (Request $request) {
 
 Route::get('/status', function (Request $request) {
     return Status::getStatusFromRequest($request);
+});
+
+Route::post('/ping', function (Request $request) {
+    return Ping::getPingFromRequest($request);
+});
+
+Route::get('/ping', function (Request $request) {
+    return Ping::getPingFromRequest($request);
 });

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="wrapper">
+    <h2>Select service</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <a href="{{ path('app_status') }}">Status</a>
+            </div>
+            <div class="col">
+                <a href="{{ path('app_ping') }}">Ping</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

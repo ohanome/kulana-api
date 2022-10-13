@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="wrapper">
+    <a class="back" href="{{ path('app_index') }}">< Back</a>
+    <h2>Ping</h2>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+    {% if result %}
+        <div class="result">
+            <h3>Result for domain {{ result.hostname }}</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>Hostname</th>
+                    <th>IP address</th>
+                    <th>Port</th>
+                    <th>Time</th>
+                    <th>Open / closed</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ result.hostname }}</td>
+                    <td>{{ result.ip }}</td>
+                    <td>{{ result.port }}</td>
+                    <td>{{ result.time }}</td>
+                    <td>{% if result.successful == 1 %}Open{% else %}Closed{% endif %}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

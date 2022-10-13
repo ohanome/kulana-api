@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="wrapper">
+    <a class="back" href="{{ path('app_index') }}">< Back</a>
+    <h2>Status</h2>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+    {% if result %}
+        <div class="result">
+            <h3>Result for domain {{ result.url }}</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>URL</th>
+                        <th>Status</th>
+                        <th>Time</th>
+                        <th>Certificate valid until</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ result.url }}</td>
+                        <td>{{ result.status }}</td>
+                        <td>{{ result.time }}</td>
+                        <td>{{ result.certificate_expiry }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
